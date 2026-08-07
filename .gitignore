@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+
+# LUNA live trading file (jangan dicampur dataset pola)
+LUNA.csv
