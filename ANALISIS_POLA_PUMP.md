@@ -182,7 +182,44 @@ Dari 3 sampel ini, sinyal yang **konsisten muncul** di hari lowest-low:
 
 ---
 
-## 7. Catatan / Keterbatasan
+## 7. Tambahan: Fase akumulasi bisa 2–3 hari (studi kasus LUNA)
+
+Analisis awal (3 token) dan 10 token berikutnya mayoritas menunjukkan pola
+"spring dan pump di hari yang sama" (tipe cepat). Tapi urutan 3 hari LUNA
+(`luna_dump.csv` 1 Agu, `luna_after_dump.csv` 2 Agu, `luna3.csv` 3 Agu)
+membuktikan ada **tipe lambat** yang HARUS diperhitungkan — filter 1-hari
+saja bisa salah menolak di H-1:
+
+| Hari | Harga | CVD | Buy TX | Vol | Baca |
+|---|--:|--:|--:|--:|---|
+| 1 Agu (dump) | open 0,000076 → low 0,0000217 (−67%), close +16,6% | −3,58% | 44,7% | 1.233 SOL | Markdown + spring 20:13; 17 akumulator 31 SOL, **100% hold** |
+| 2 Agu (H-1) | open 0,000025, range 0,000023–0,000040, close −0,4% | +0,40% | **49,9%** | **338 SOL (−73%)** | Higher-low 23:19, **volume kering**, supply habis (fase tes/LPS) |
+| 3 Agu (pump) | open 0,0000247 → high 0,0000691 (**+180%**) di 00:19, close +37% | +2,10% | 53,1% | 1.360 SOL | Mark-up: 564 tx / +34,8 SOL di 1 jam pertama |
+
+Pelajaran kunci:
+1. **Jangan analisa 1 hari saja** — di H-1 tipe lambat, filter yang tadinya
+   "wajib" (buy TX ≥52%, avg SELL > avg BUY, whale net negatif) justru TIDAK
+   muncul (LUNA Aug2: 49,9%; buy ≈ sell; whale net +4).
+2. **Volume kering di H-1 adalah sinyal BULLISH**, bukan kelemahan:
+   vol turun ≥50% dari hari dump + higher-low + CVD datar = supply habis.
+3. **Retention lintas hari lebih penting dari retensi 1 hari:** 59% akumulator
+   Aug1 masih hold sampai pump Aug3.
+4. Pump bisa picu **tepat di awal hari baru** (00:02 UTC) dengan lonjakan
+   tx/CVD — multi-timeframe 30m/1h akan menangkapnya, tapi detektor harus
+   punya STATE 2–3 hari, bukan snapshot.
+5. Label "kontrol non-pump" yang sempat saya pasang ke Aug1/Aug2 **salah** —
+   keduanya bagian dari fase akumulasi. Sampel non-pump asli belum ada.
+
+### Filter yang direvisi
+- **Tetap andal di kedua tipe:** |CVD harian| <10%; spring + retention;
+  higher-low; volume kering di hari tes.
+- **Hanya WAJIB di tipe cepat (hari spring=pump):** buy TX ≥52%; avg SELL >
+  avg BUY; whale net negatif besar. Jangan hard-fail untuk H-1 tipe lambat.
+- **Tambahan untuk multi-hari:** lacak (a) spring di hari sebelumnya dengan
+  retention ≥50%, (b) H-1 higher-low + vol kering ≥50%, (c) CVD H-1 tetap
+  datar/positif, (d) lonjakan tx/CVD awal hari-H.
+
+## 8. Catatan / Keterbatasan
 
 - `testicle` low 25 Des jam 08:56 dan pump intraday ke 0,00053 sudah terjadi sore hari itu (bukan "besok"); tetap merefleksikan pola akumulasi yang sama.
 - `hoppy` window rekaman hanya sampai 16:25 (16 jam), jadi fase penutupan lebih pendek.
